@@ -7,14 +7,18 @@ Main files created for this project:
 - `backend/`: Directory containing the Flask backend server code.
 
   - `server.py`: Backend server script providing endpoints for searching PubMed publications and retrieving publication details.
+
   - `requirements.txt`: File listing the Python dependencies required for the backend server.
 
 - `frontend/`: Directory containing the React frontend SPA code.
 
   - `src/`: Directory containing the source code of the React application.
-    - `App.js`: Main component of the React application, handling the overall structure and logic.
+
+    - `App.js`: Main component of the React application, handling the overall structure and logic. Makes calls to the `/search` and `/deails` endpoints in the Flask server, and passes the results to the necessary components.
+
     - `SearchForm.js`: Component for the search form, allowing users to input search queries.
-    - `ResultsList.js`: Component for displaying search results and publication details.
+
+    - `ResultsList.js`: Component for displaying search results and publication details. Makes calls to the `/details` endpoint in the Flask sever.
 
 - `README.md`: This file, containing information about the project, its functionalities, and usage instructions.
 
