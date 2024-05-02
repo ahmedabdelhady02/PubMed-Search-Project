@@ -66,7 +66,7 @@ def get_details():
                 # concatenate text content of ArticleTitle including text from child elements
                 title = "".join(title_element.itertext()).strip()
             else:
-                title = "Title not available"
+                title = "Title not available."
             detail["Title"] = title
 
         if "Abstract" in fields:
@@ -109,15 +109,21 @@ def get_details():
                 detail["AuthorList"] = ", ".join(authors)
 
             else:  # no AuthorList element found
-                detail["AuthorList"] = "No authors listed"
+                detail["AuthorList"] = "No authors listed."
 
         if "Journal" in fields:
-            detail["Journal"] = article.find(".//Journal/Title").text
+            journal_element = article.find(".//Journal/Title")
+            if journal_element is not None:
+                detail["Journal"] = journal_element.text
+            else:
+                detail["Journal"] = "Journal not available."
 
         if "PublicationYear" in fields:
-            detail["PublicationYear"] = article.find(
-                ".//JournalIssue/PubDate/Year"
-            ).text
+            pub_year_element = article.find(".//JournalIssue/PubDate/Year")
+            if pub_year_element is not None:
+                detail["PublicationYear"] = pub_year_element.text
+            else:
+                detail["PublicationYear"] = "Year not available."
 
         if "MeSHTerms" in fields:
             detail["MeSHTerms"] = [
