@@ -21,8 +21,10 @@ def search_publications():
     response = requests.get(search_url)
     results = response.text
 
+    # create element tree from XML response
     root = ET.fromstring(results)
 
+    # find all <Id> tags and put them in a list
     ids = [id.text for id in root.findall(".//Id")]
 
     return jsonify({"ids": ids})
@@ -35,6 +37,7 @@ def get_details():
     #   - fields: list of fields to return
     ids = request.args.get("ids")
     fields = request.args.get("fields")
+    # default values if no fields specified
     if fields is None:
         fields = [
             "PMID",
@@ -84,16 +87,25 @@ def get_details():
                 # extract authors' names
                 authors = []
                 for author in author_list.findall(".//Author"):
-                    last_name = author.find(".//LastName").text
-                    first_name_element = author.find(".//ForeName")
+                    last_name_element = author.find(".//LastName")
+                    if last_name_element is not None:
+                        last_name = last_name_element.text
+                    else:
+                        last_name = ""
 
+                    first_name_element = author.find(".//ForeName")
                     if first_name_element is not None:
-                        # edge case for no first names given
-                        first_name = first_name_element.text
+                        first_name = first_name_element.text + " "
                     else:
                         first_name = ""
 
-                    authors.append(f"{first_name} {last_name}")
+                    # edge case for collectives/organizations as authors
+                    collective_name = author.find(".//CollectiveName")
+                    if collective_name is not None:
+                        last_name = collective_name.text
+                        first_name = ""
+
+                    authors.append(f"{first_name}{last_name}")
                 detail["AuthorList"] = ", ".join(authors)
 
             else:  # no AuthorList element found
