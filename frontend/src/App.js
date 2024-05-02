@@ -5,19 +5,18 @@ import ResultsList from './ResultsList';
 
 function App() {
   const [results, setResults] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
 
   const fetchResults = async (query, page) => {
-    const response = await axios.post('/search', { query, retstart: page * 20, retmax: 20 });
-    const results = await axios.get(`/details?ids=${response.data.ids}`);
+    const response = await axios.post('/search', { query, retstart: page * 20, retmax: 20 }); // send request to retreive list of ids
+    const results = await axios.get(`/details?ids=${response.data.ids}&fields=['PMID', 'Title', 'PublicationYear']`); // get details for all ids retrieved
     setResults(results.data.details);
   };
 
   const handleSearch = (query) => {
     setQuery(query);
-    setCurrentPage(0);
+    setCurrentPage(0); // reset page count to 0 for pagination
     fetchResults(query, currentPage);
   };
 
