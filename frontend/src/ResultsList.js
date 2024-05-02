@@ -26,6 +26,11 @@ function ResultsList({ results, onPageChange, currentPage }) {
               <p>
                 Published in: {selectedDetail.Journal}, {selectedDetail.PublicationYear}
               </p>
+              {selectedDetail.MeSHTerms.length > 0 ? (
+                <p>MeSH Terms: {selectedDetail.MeSHTerms.join(', ')}</p>
+              ) : (
+                <p>No MeSH terms available for this publication.</p>
+              )}
               <a href={`https://pubmed.ncbi.nlm.nih.gov/${selectedDetail.PMID}/`}>View on PubMed</a>
             </div>
           )}
