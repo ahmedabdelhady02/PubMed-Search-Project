@@ -68,17 +68,6 @@ The frontend single-page application is developed with React, a JavaScript libra
      - Shows detailed information about a selected publication, including title, abstract, authors, journal, publication year, and MeSH terms.
      - Provides a link to the original webpage of each publication on PubMed for further reference.
 
-Say what the step will be
-
-    Give the example
-
-And repeat
-
-    until finished
-
-End with an example of getting some data out of the system or using it
-for a little demo
-
 ## Usage
 
 To run this application, download this repo and follow these setup steps:
